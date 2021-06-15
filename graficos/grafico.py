@@ -20,7 +20,18 @@ print(pd.Series( 32, range(10)))
 
 gasesNobresA = pd.Series([4.003, 20.180, 39.95, 83.798, 132.293, 222])
 
-print(gasesNobresA)
+print(gasesNobresA.mean()) #media desses gases todos
+
+
+print(gasesNobresA.max()) #maximo
+print(gasesNobresA.min()) #minimo
+print(gasesNobresA.std()) #desvio padrão
+print(gasesNobresA.describe()) #informações
+
+
+for item in gasesNobresA:
+    print(item, item * 2)
+
 
 
 # y = pyautogui.position()
