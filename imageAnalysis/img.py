@@ -14,10 +14,12 @@ iResult = iA
 
 # cv2.imshow('image', iA)
 
-
 plt.imshow(iA, cmap = 'gray', interpolation='bicubic')
 
-plt.plot([900, 400], [80, 600], 'r', linewidth=2)
+plt.plot([493, 233], [200, 295], 'r', linewidth=2)
+plt.plot([43, 450], [200, 45], 'b', linewidth=3)
+
+
 plt.show()
 
 cv2.imwrite('imagem', iA)
