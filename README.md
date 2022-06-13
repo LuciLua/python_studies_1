@@ -1,7 +1,5 @@
 # BOTS IN PYTHON
 This is a test repository
-
-
 # Machine_Flood
 
 <img src="floodmachine.png">
@@ -18,3 +16,9 @@ This is a test repository
 # WebScraping
 
 <img src="links.png">
+
+# Stack Plots 
+<img src="stack_plots.png">
+
+# Histogram
+<img src="histogram.png">
