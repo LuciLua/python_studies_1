@@ -1,13 +1,28 @@
 import requests
 import argparse
 
+# Colors for CLI
+class Colors:
+    gray = '\x1b[90m'
+    red = '\x1b[91m'
+    green = '\x1b[92m'
+    yellow = '\x1b[93m'
+    blue = '\x1b[94m'
+    pink = '\x1b[95m'
+    white = '\x1b[97m'
+
+# Default values for arguments
 method = 'get'
 path = 'http://google.com'
-data = "defaultValue"
+value = "defaultValue"
 key = "defaultValue"
+cookies = False
+content = False
+headers = False
 
 parser = argparse.ArgumentParser()
 
+# Arguments 
 parser.add_argument(
     '-m',
     '--method',
@@ -21,73 +36,108 @@ parser.add_argument(
     help='insert path')
 
 parser.add_argument(
-    '-d',
-    '--data',
+    '-v',
+    '--value',
     nargs='?',
-    help='insert data')
+    help='insert value')
 
 parser.add_argument(
     '-k',
     '--key',
     nargs='?',
-    help='insert key for data')
+    help='insert key for value')
+
+parser.add_argument(
+    '-c',
+    '--cookies',
+    nargs='?',
+    const=True,
+    help='insert cookies option')
+
+parser.add_argument(
+    '-C',
+    '--Content',
+    nargs='?',
+    const=True,
+    help='insert Content option')
+
+parser.add_argument(
+    '-H',
+    '--Headers',
+    nargs='?',
+    const=True,
+    help='insert Headers option')
 
 
 args = parser.parse_args()
 
+# What was past
+def printKeyAndValue():
+    return '''%s key and value: %s %s\n''' % (Colors.gray, Colors.green, value)
+def printMethod():
+    return '''%s method: %s %s\n''' % (Colors.gray, Colors.green, method)
+def printPath():
+    return '''%s path: %s %s\n''' % (Colors.gray, Colors.green, path)
 
-class Colors:
-    gray = '\x1b[90m'
-    red = '\x1b[91m'
-    green = '\x1b[92m'
-    yellow = '\x1b[93m'
-    blue = '\x1b[94m'
-    pink = '\x1b[95m'
-    white = '\x1b[97m'
-
-
+# Run with appropriate params 
 def sent():
-    print(
-        '''
-%s method: %s %s            
-%s path: %s %s'''
-        % (
-            Colors.gray, Colors.green, method,
-            Colors.gray, Colors.green, path,
-        ))
-
-
+    if (method == 'post'):
+        print(printMethod() + printPath() + printKeyAndValue())
+    elif (method == 'get'):
+        print(printMethod() + printPath())
+        
+        
 if (args.method and args.path):
     method = args.method
     path = args.path
-    key = args.key
-    data = {args.key: args.data}
+    
+    # Optional params 
+    if(args.method == 'post'):
+        key = args.key
+        value = {args.key: args.value}
+    if (args.cookies):
+        cookies = True
+    if (args.Content):
+        content = True
+    if (args.Headers):
+        headers = True
 
-    if (method != 'post'
-            and method != 'get'):
-        print('{}Method not exists'.format(Colors.red))
+    if (method != 'post' and method != 'get'):
+        print(Colors.red + '\nMethod not exists\n')
+
     else:
         sent()
 
+        def printStatus(response):
+            return '''%sStatus: %s %s''' % (Colors.white, Colors.blue, response.status_code)
+
+        def printHeaders(response):
+            return '''%sHeaders: %s %s''' % (Colors.white, Colors.gray, response.headers)
+
+        def printCookies(response):
+            return '''%sCookies: %s %s''' % (Colors.white, Colors.gray, response.cookies)
+
+        def printContent(response):
+            return '''%sContent: %s %s''' % (Colors.white, Colors.gray, response.content)
+
         if (method == 'get'):
             response = requests.get(path)
-            print(
-                '''
-%sStatus: %s %s
-%sHeaders: %s %s
-''' %
-                (
-                    Colors.white, Colors.blue, response.status_code,  # status
-                    Colors.white, Colors.gray, response.headers  # content text
-                ))
+            print(printStatus(response))
+            if (headers):
+                print(printHeaders(response))
+            if (cookies):
+                print(printCookies(response))
+            if (content):
+                print(printContent(response))
+
         elif (method == 'post'):
-            response = requests.post(path, data=data)
-            print(
-                '''
-%sStatus: %s %s
-%sHeaders: %s %s
-            ''' %
-                (
-                    Colors.white, Colors.blue, response.status_code,  # status
-                    Colors.white, Colors.gray, response.headers  # content text
-                ))
+            response = requests.post(path, data=value)
+            print(printStatus(response))
+            if (headers):
+                print(printHeaders(response))
+            if (cookies):
+                print(printCookies(response))
+            if (content):
+                print(printContent(response))
+else: 
+    print(Colors.red + "path or method is undefinned or null") 
