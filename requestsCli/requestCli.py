@@ -1,5 +1,7 @@
 import requests
 import argparse
+import os
+from pywebcopy import save_webpage
 
 # Colors for CLI
 class Colors:
@@ -11,40 +13,47 @@ class Colors:
     pink = '\x1b[95m'
     white = '\x1b[97m'
 
+
 # Default values for arguments
-method = 'get'
-path = 'http://google.com'
-value = "defaultValue"
-key = "defaultValue"
+method = False
+path = False
+value = False
+key = False
 cookies = False
 content = False
 headers = False
+copy = False
+open = False
 
 parser = argparse.ArgumentParser()
 
-# Arguments 
+# Arguments
 parser.add_argument(
     '-m',
     '--method',
     nargs='?',
+    const=True,
     help='choice method')
 
 parser.add_argument(
     '-p',
     '--path',
     nargs='?',
+    const=True,
     help='insert path')
 
 parser.add_argument(
     '-v',
     '--value',
     nargs='?',
+    const=True,
     help='insert value')
 
 parser.add_argument(
     '-k',
     '--key',
     nargs='?',
+    const=True,
     help='insert key for value')
 
 parser.add_argument(
@@ -68,31 +77,77 @@ parser.add_argument(
     const=True,
     help='insert Headers option')
 
+parser.add_argument(
+    '-cp',
+    '--copy',
+    nargs='?',
+    const=True,
+    help='Copy site')
+
+parser.add_argument(
+    '-o',
+    '--open',
+    nargs='?',
+    const=True,
+    help='open site clone')
 
 args = parser.parse_args()
-
 # What was past
+
+
 def printKeyAndValue():
     return '''%s key and value: %s %s\n''' % (Colors.gray, Colors.green, value)
+
 def printMethod():
     return '''%s method: %s %s\n''' % (Colors.gray, Colors.green, method)
+
 def printPath():
     return '''%s path: %s %s\n''' % (Colors.gray, Colors.green, path)
 
-# Run with appropriate params 
+def printCopy():
+    return '''%sMaking a copy of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
+
+
+def copySite():
+    open = args.open
+    nameOfFolder = 'siteClone'
+    currentDir = os.getcwd()
+    
+    if (args.open):
+        open = True
+    if (args.copy and args.copy != True):
+        nameOfFolder = args.copy
+    
+    kwargs = {'project_name': nameOfFolder}
+    save_webpage(
+        url=path,
+        project_folder=currentDir,
+        open_in_browser=open,
+        **kwargs
+    )
+
 def sent():
     if (method == 'post'):
         print(printMethod() + printPath() + printKeyAndValue())
-    elif (method == 'get'):
+    if (method == 'get'):
         print(printMethod() + printPath())
-        
-        
-if (args.method and args.path):
+    if (copy):
+        print(printCopy())
+        copySite()
+        print('''\n%sCopy successful!\n''' % (Colors.green))
+
+
+if (args.path and args.copy):
+    path = args.path
+    copy = True
+    sent()
+
+elif (args.method and args.path):
     method = args.method
     path = args.path
-    
-    # Optional params 
-    if(args.method == 'post'):
+
+    # Optional params
+    if (args.method == 'post'):
         key = args.key
         value = {args.key: args.value}
     if (args.cookies):
@@ -119,6 +174,7 @@ if (args.method and args.path):
 
         def printContent(response):
             return '''%sContent: %s %s''' % (Colors.white, Colors.gray, response.content)
+        
 
         if (method == 'get'):
             response = requests.get(path)
@@ -139,5 +195,7 @@ if (args.method and args.path):
                 print(printCookies(response))
             if (content):
                 print(printContent(response))
-else: 
-    print(Colors.red + "path or method is undefinned or null") 
+            
+        
+else:
+    print(Colors.red + "path or method is undefinned or null")
