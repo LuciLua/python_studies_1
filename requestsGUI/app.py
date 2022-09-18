@@ -1,14 +1,6 @@
-from doctest import master
 import tkinter as tk
-from turtle import bgcolor, color
-import pyautogui
-import time
-import msvcrt
-import keyboard
 import requests
-
 from tkinter import Text
-from PIL import ImageTk, Image
 
 # Default values for arguments
 status = '???'
@@ -59,15 +51,6 @@ canvas.pack(fill="both", expand=True)
 # Create welcome screen
 
 def welcome():
-    # urlLabel.destroy()
-    # urlInput.destroy()
-    # methodInput.destroy()
-    # methodLabel.destroy()
-    # headerOption.destroy()
-    # contentOption.destroy()
-    # cookiesOption.destroy()
-    # sendBtn.destroy()
-    
     path = urlInput.get()
     method = methodInput.get()
     status = requests.get(path).status_code
@@ -162,14 +145,6 @@ statusLabel = tk.Label(
     foreground='#554455'
 )
 canvas.create_window(500, 100, window=statusLabel, anchor="nw", width=50)
-
-# # Status result
-# statusLabelResult = tk.Label(
-#     window, text=status,
-#     bg='#332233',
-#     foreground='#55ff55'
-# )
-# canvas.create_window(550, 100, window=statusLabelResult, anchor="nw", width=50)
 
 # Define Button
 sendBtn = tk.Button(
