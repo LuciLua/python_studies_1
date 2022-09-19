@@ -1,7 +1,12 @@
 import requests
 import argparse
 import os
-from pywebcopy import save_webpage
+
+from modules.copysite import copySite
+# from pywebcopy import save_webpage
+
+# my modules
+# from modules.copysite import copySite
 
 # Colors for CLI
 class Colors:
@@ -23,7 +28,7 @@ cookies = False
 content = False
 headers = False
 copy = False
-open = False
+openBrowser = False
 
 parser = argparse.ArgumentParser()
 
@@ -86,7 +91,7 @@ parser.add_argument(
 
 parser.add_argument(
     '-o',
-    '--open',
+    '--openBrowser',
     nargs='?',
     const=True,
     help='open site clone')
@@ -108,24 +113,6 @@ def printCopy():
     return '''%sMaking a copy of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
 
 
-def copySite():
-    open = args.open
-    nameOfFolder = 'siteClone'
-    currentDir = os.getcwd()
-    
-    if (args.open):
-        open = True
-    if (args.copy and args.copy != True):
-        nameOfFolder = args.copy
-    
-    kwargs = {'project_name': nameOfFolder}
-    save_webpage(
-        url=path,
-        project_folder=currentDir,
-        open_in_browser=open,
-        **kwargs
-    )
-
 def sent():
     if (method == 'post'):
         print(printMethod() + printPath() + printKeyAndValue())
@@ -133,7 +120,7 @@ def sent():
         print(printMethod() + printPath())
     if (copy):
         print(printCopy())
-        copySite()
+        copySite(args, path, openBrowser)
         print('''\n%sCopy successful!\n''' % (Colors.green))
 
 
