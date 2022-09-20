@@ -3,12 +3,15 @@ import argparse
 import os
 
 from modules.copysite import copySite
+from modules.savecontent import saveContent
 # from pywebcopy import save_webpage
 
 # my modules
 # from modules.copysite import copySite
 
 # Colors for CLI
+
+
 class Colors:
     gray = '\x1b[90m'
     red = '\x1b[91m'
@@ -29,6 +32,7 @@ content = False
 headers = False
 copy = False
 openBrowser = False
+save = False
 
 parser = argparse.ArgumentParser()
 
@@ -96,6 +100,13 @@ parser.add_argument(
     const=True,
     help='open site clone')
 
+parser.add_argument(
+    '-s',
+    '--saveContent',
+    nargs='?',
+    const=True,
+    help='save content')
+
 args = parser.parse_args()
 # What was past
 
@@ -103,28 +114,50 @@ args = parser.parse_args()
 def printKeyAndValue():
     return '''%s key and value: %s %s\n''' % (Colors.gray, Colors.green, value)
 
+
 def printMethod():
     return '''%s method: %s %s\n''' % (Colors.gray, Colors.green, method)
 
+
 def printPath():
     return '''%s path: %s %s\n''' % (Colors.gray, Colors.green, path)
+
+
+def printSave():
+    return '''%s Saving data of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
+
 
 def printCopy():
     return '''%sMaking a copy of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
 
 
 def sent():
+    
+    contentData = requests.get(path)
+    
     if (method == 'post'):
         print(printMethod() + printPath() + printKeyAndValue())
+        
     if (method == 'get'):
         print(printMethod() + printPath())
+        
     if (copy):
         print(printCopy())
         copySite(args, path, openBrowser)
         print('''\n%sCopy successful!\n''' % (Colors.green))
+        
+    if (save):
+        print(printMethod() + printPath() + printSave())
+        saveContent(contentData)
+        print('''\n%sSave successful!\n''' % (Colors.green))
 
 
-if (args.path and args.copy):
+if (args.path and args.saveContent):
+    path = args.path
+    save = True
+    sent()
+
+elif (args.path and args.copy):
     path = args.path
     copy = True
     sent()
@@ -147,6 +180,7 @@ elif (args.method and args.path):
     if (method != 'post' and method != 'get'):
         print(Colors.red + '\nMethod not exists\n')
 
+    # post or get
     else:
         sent()
 
@@ -161,7 +195,6 @@ elif (args.method and args.path):
 
         def printContent(response):
             return '''%sContent: %s %s''' % (Colors.white, Colors.gray, response.content)
-        
 
         if (method == 'get'):
             response = requests.get(path)
@@ -182,7 +215,7 @@ elif (args.method and args.path):
                 print(printCookies(response))
             if (content):
                 print(printContent(response))
-            
-        
+
+
 else:
     print(Colors.red + "path or method is undefinned or null")
