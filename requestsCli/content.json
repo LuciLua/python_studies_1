@@ -1,4 +1,4 @@
-b'{
+{
     "login": "LuciLua",
     "id": 43728964,
     "node_id": "MDQ6VXNlcjQzNzI4OTY0",
@@ -31,4 +31,4 @@ b'{
     "following": 176,
     "created_at": "2018-09-30T17:56:56Z",
     "updated_at": "2022-09-13T01:50:35Z"
-}'
+}

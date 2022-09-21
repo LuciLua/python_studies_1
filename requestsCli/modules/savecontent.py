@@ -1,11 +1,23 @@
+from base64 import decode
 import json
 import os
 
 def saveContent(contentData):
     
-    # nameOfFile = 'content'
-    # currentDir = os.getcwd()
+    # data = str(contentData.content)
+    data = str(contentData.content)
+    data.encode('UTF-8', 'strict')
+    # with open('content.json', 'w') as write_file:
+    
     file = open('content.json', 'w')
-    file.write('{}'.format(contentData.content))
-    file.encoding('utf-8')
+        
+    # data = json.load(write_file)
+        
+    json.dumps(data)
+    json.dumps(data, indent=2)
+        
+    # jsonString = json.dumps(data)
+        
+    file.write(data)
     file.close()
+        
