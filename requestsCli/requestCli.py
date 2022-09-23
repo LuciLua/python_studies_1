@@ -1,26 +1,11 @@
 import requests
 import argparse
-import os
 
 from modules.copysite import copySite
 from modules.savecontent import saveContent
-# from pywebcopy import save_webpage
-
-# my modules
-# from modules.copysite import copySite
 
 # Colors for CLI
-
-
-class Colors:
-    gray = '\x1b[90m'
-    red = '\x1b[91m'
-    green = '\x1b[92m'
-    yellow = '\x1b[93m'
-    blue = '\x1b[94m'
-    pink = '\x1b[95m'
-    white = '\x1b[97m'
-
+from modules.colors import Colors
 
 # Default values for arguments
 method = False
@@ -113,23 +98,14 @@ args = parser.parse_args()
 
 def printKeyAndValue():
     return '''%s key and value: %s %s\n''' % (Colors.gray, Colors.green, value)
-
-
 def printMethod():
     return '''%s method: %s %s\n''' % (Colors.gray, Colors.green, method)
-
-
 def printPath():
     return '''%s path: %s %s\n''' % (Colors.gray, Colors.green, path)
-
-
 def printSave():
     return '''%s Saving data of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
-
-
 def printCopy():
     return '''%sMaking a copy of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
-
 
 def sent():
     
@@ -152,70 +128,66 @@ def sent():
         print('''\n%sSave successful!\n''' % (Colors.green))
 
 
-if (args.path and args.saveContent):
+# for each arg 
+if (args.path):
     path = args.path
-    save = True
+    
+    if (args.saveContent):
+        save = True
+        
+    if (args.copy):
+        copy = True
+
+    if (args.method):
+        method = args.method
+        
+        if (args.method == 'post'):
+            key = args.key
+            value = {args.key: args.value}
+        if (method != 'post' and method != 'get'):
+            print(Colors.red + '\nMethod not exists\n')
+            
+        if (args.cookies):
+            cookies = True
+        if (args.Content):
+            content = True
+        if (args.Headers):
+            headers = True
     sent()
-
-elif (args.path and args.copy):
-    path = args.path
-    copy = True
-    sent()
-
-elif (args.method and args.path):
-    method = args.method
-    path = args.path
-
-    # Optional params
-    if (args.method == 'post'):
-        key = args.key
-        value = {args.key: args.value}
-    if (args.cookies):
-        cookies = True
-    if (args.Content):
-        content = True
-    if (args.Headers):
-        headers = True
-
-    if (method != 'post' and method != 'get'):
-        print(Colors.red + '\nMethod not exists\n')
-
-    # post or get
-    else:
-        sent()
-
-        def printStatus(response):
-            return '''%sStatus: %s %s''' % (Colors.white, Colors.blue, response.status_code)
-
-        def printHeaders(response):
-            return '''%sHeaders: %s %s''' % (Colors.white, Colors.gray, response.headers)
-
-        def printCookies(response):
-            return '''%sCookies: %s %s''' % (Colors.white, Colors.gray, response.cookies)
-
-        def printContent(response):
-            return '''%sContent: %s %s''' % (Colors.white, Colors.gray, response.content)
-
-        if (method == 'get'):
-            response = requests.get(path)
-            print(printStatus(response))
-            if (headers):
-                print(printHeaders(response))
-            if (cookies):
-                print(printCookies(response))
-            if (content):
-                print(printContent(response))
-
-        elif (method == 'post'):
-            response = requests.post(path, data=value)
-            print(printStatus(response))
-            if (headers):
-                print(printHeaders(response))
-            if (cookies):
-                print(printCookies(response))
-            if (content):
-                print(printContent(response))
-
-
+    
 else:
     print(Colors.red + "path or method is undefinned or null")
+        
+    
+# post or get
+def printStatus(response):
+    return '''%sStatus: %s %s''' % (Colors.white, Colors.blue, response.status_code)
+
+def printHeaders(response):
+    return '''%sHeaders: %s %s''' % (Colors.white, Colors.gray, response.headers)
+
+def printCookies(response):
+    return '''%sCookies: %s %s''' % (Colors.white, Colors.gray, response.cookies)
+
+def printContent(response):
+    return '''%sContent: %s %s''' % (Colors.white, Colors.gray, response.content)
+
+if (method == 'get'):
+    response = requests.get(path)
+    print(printStatus(response))
+    if (headers):
+        print(printHeaders(response))
+    if (cookies):
+        print(printCookies(response))
+    if (content):
+        print(printContent(response))
+
+if (method == 'post'):
+    response = requests.post(path, data=value)
+    print(printStatus(response))
+    if (headers):
+        print(printHeaders(response))
+    if (cookies):
+        print(printCookies(response))
+    if (content):
+        print(printContent(response))
