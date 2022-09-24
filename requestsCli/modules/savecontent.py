@@ -9,7 +9,7 @@ def saveContent(contentData):
     data.encode('UTF-8', 'strict')
     # with open('content.json', 'w') as write_file:
     
-    file = open('content.json', 'w')
+    file = open('saves/content.json', 'w')
         
     # data = json.load(write_file)
         

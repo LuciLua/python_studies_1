@@ -1,3 +1,4 @@
+import os
 import requests
 import argparse
 
@@ -96,70 +97,7 @@ args = parser.parse_args()
 # What was past
 
 
-def printKeyAndValue():
-    return '''%s key and value: %s %s\n''' % (Colors.gray, Colors.green, value)
-def printMethod():
-    return '''%s method: %s %s\n''' % (Colors.gray, Colors.green, method)
-def printPath():
-    return '''%s path: %s %s\n''' % (Colors.gray, Colors.green, path)
-def printSave():
-    return '''%s Saving data of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
-def printCopy():
-    return '''%sMaking a copy of %s %s %s...\n''' % (Colors.gray, Colors.green, path, Colors.gray)
-
-def sent():
-    
-    contentData = requests.get(path)
-    
-    if (method == 'post'):
-        print(printMethod() + printPath() + printKeyAndValue())
-        
-    if (method == 'get'):
-        print(printMethod() + printPath())
-        
-    if (copy):
-        print(printCopy())
-        copySite(args, path, openBrowser)
-        print('''\n%sCopy successful!\n''' % (Colors.green))
-        
-    if (save):
-        print(printMethod() + printPath() + printSave())
-        saveContent(contentData)
-        print('''\n%sSave successful!\n''' % (Colors.green))
-
-
-# for each arg 
-if (args.path):
-    path = args.path
-    
-    if (args.saveContent):
-        save = True
-        
-    if (args.copy):
-        copy = True
-
-    if (args.method):
-        method = args.method
-        
-        if (args.method == 'post'):
-            key = args.key
-            value = {args.key: args.value}
-        if (method != 'post' and method != 'get'):
-            print(Colors.red + '\nMethod not exists\n')
-            
-        if (args.cookies):
-            cookies = True
-        if (args.Content):
-            content = True
-        if (args.Headers):
-            headers = True
-    sent()
-    
-else:
-    print(Colors.red + "path or method is undefinned or null")
-        
-    
-# post or get
+# Header, Queries and Tasks Prints
 def printStatus(response):
     return '''%sStatus: %s %s''' % (Colors.white, Colors.blue, response.status_code)
 
@@ -172,9 +110,27 @@ def printCookies(response):
 def printContent(response):
     return '''%sContent: %s %s''' % (Colors.white, Colors.gray, response.content)
 
-if (method == 'get'):
-    response = requests.get(path)
-    print(printStatus(response))
+def printKeyAndValue():
+    return '''%sKey and Value: %s %s''' % (Colors.gray, Colors.green, value)
+
+def printMethod():
+    return '''%sMethod: %s %s\n''' % (Colors.gray, Colors.green, method)
+
+def printPath():
+    return '''%sPath: %s %s''' % (Colors.gray, Colors.green, path)
+
+def printSave():
+    return '''%s[...] Saving data of %s on %s %s\saves %s...''' % (Colors.gray, path, Colors.yellow, os.getcwd(), Colors.gray)
+
+def printCopy():
+    return '''%s[...] Making a copy of %s %s %s...''' % (Colors.gray, Colors.green, path, Colors.gray)
+
+# ---- Div ----
+def div(name='???', n=25):
+    print( Colors.gray +('-'*n) + name + '-'*n)
+    
+    
+def showStatusAndVerifyArgsHeadersCookiesAndContent(response):
     if (headers):
         print(printHeaders(response))
     if (cookies):
@@ -182,12 +138,71 @@ if (method == 'get'):
     if (content):
         print(printContent(response))
 
-if (method == 'post'):
-    response = requests.post(path, data=value)
-    print(printStatus(response))
-    if (headers):
-        print(printHeaders(response))
-    if (cookies):
-        print(printCookies(response))
-    if (content):
-        print(printContent(response))
+
+def mainExec():
+    contentData = requests.get(path)
+
+    # -------- Header [start] --------
+    div('HEADER')
+    if (method and method == 'post' or method == 'get'):
+        print(printMethod() + printPath())
+        if (method == 'post'):
+            print(printKeyAndValue())
+    else:
+        print(Colors.red + '\n> Method not exists or not was defined\n') 
+    div('QUERIES')
+    # -------- Header [end] --------
+    
+    # -------- Queries [start] -------- 
+    if (method == 'get'):
+        response = requests.get(path)
+        print(printStatus(response))
+        showStatusAndVerifyArgsHeadersCookiesAndContent(response)
+    if (method == 'post'):
+        response = requests.post(path, data=value)
+        print(printStatus(response))
+        showStatusAndVerifyArgsHeadersCookiesAndContent(response)
+    div('TASKS')
+    # -------- Queries [end] --------
+    
+    # -------- Output tasks [start] --------
+    if (method and method == 'post' or method == 'get'):
+        if (copy):
+            print(printCopy())
+            copySite(args, path, openBrowser) # task   
+            print('''%s✅ Copy successful!''' % (Colors.green))
+        if (save):
+            print(printSave())
+            saveContent(contentData) # task   
+            print('''%s✅ Save successful!''' % (Colors.green))
+    # -------- Output tasks [end] --------
+    
+# -------- Defines args and values --------
+if (args.path):
+    path = args.path
+
+    if (args.saveContent):
+        save = True
+
+    if (args.copy):
+        copy = True
+
+    if (args.method):
+        method = args.method
+
+        if (args.method == 'post'):
+            key = args.key
+            value = {args.key: args.value}
+
+        if (args.cookies):
+            cookies = True
+        if (args.Content):
+            content = True
+        if (args.Headers):
+            headers = True
+            
+    # exec final 
+    mainExec()
+
+else:
+    print(Colors.red + "\n> Needs a path")
