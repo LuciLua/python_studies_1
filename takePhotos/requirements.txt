@@ -1,1 +1,2 @@
-
+playsound==1.2.2
+PyAutoGUI==0.9.53

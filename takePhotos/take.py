@@ -8,7 +8,7 @@ from time import sleep
 from datetime import datetime
 
 # minimize window
-# ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 # Create Tk from tk
 window = tk.Tk()
