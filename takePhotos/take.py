@@ -17,10 +17,21 @@ window = tk.Tk()
 window.resizable(0, 0)
 window.anchor('center')
 
+# directories
+current_dir = os.getcwd()
+screenshots_path = current_dir + '\\screenshots'
+
+backgroundImage = current_dir+'\\assets\\background.png'
+
+# colors
+background = '#1e1e1e'
+primaryColor = '#0089d2'
+cancelColor = '#a5272b'
+
 # Window: propreties
 window_width = 300
 window_height = 200
-windows_backgroundColor = '#1e1e1e'
+windows_backgroundColor = background
 backgroundColor_default = windows_backgroundColor
 fontColor_default = '#fff'
 
@@ -40,15 +51,14 @@ window.title("prints_machine v0.1.0 Alpha")
 canvas1.pack()
 
 # remove the border
-# window.overrideredirect(1)
+window.overrideredirect(1)
 
 # window center
 window.eval('tk::PlaceWindow . center')
 
-current_dir = os.getcwd()
-screenshots_path = current_dir + '\\screenshots'
-
 # listen a sound effect
+
+
 def playSound(type):
     assets_path = current_dir + '\\assets'
     if type == 'take':
@@ -58,8 +68,10 @@ def playSound(type):
     else:
         file_path = assets_path + '\\destroy.wav'
     playsound(file_path)
-    
+
 # if not exist: create. If already, just print a messasge
+
+
 def createDirectory():
     if os.path.isdir(screenshots_path):
         print("[...] directory already exists")
@@ -72,10 +84,12 @@ def takeScreenShot():
     window.iconify()
     sleep(.2)
     screenshot = pyautogui.screenshot()
+    playSound('take')
     print("[...] Screenshot was taken")
-    sleep(.4)
+    sleep(.2)
     window.deiconify()
     return screenshot
+
 
 def saveScreenShot():
     date = (datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f'))
@@ -89,14 +103,17 @@ def saveScreenShot():
     print("[...] Screenshot was saved")
 
 # main function
+
+
 def run():
-    playSound('take')
     createDirectory()
     saveScreenShot()
 
+
 def close():
-    playSound('close')
     window.destroy()
+    playSound('close')
+
 
 def directory():
     playSound('directory')
@@ -118,6 +135,16 @@ label1 = tk.Label(
 label1.config(font=('Poppins', 16))
 canvas1.create_window(half_width, (half_heigth - 50), window=label1)
 
+# Background Image
+# bgImage = tk.Image(
+#     window,
+#     width=300,
+#     anchor='center',
+#     background=backgroundImage
+# )
+# canvas1.create_window(half_width, half_heigth, window=bgImage)
+
+
 # button: Take a Photo
 button1 = tk.Button(
     window,
@@ -125,7 +152,7 @@ button1 = tk.Button(
     command=run,
     text='Take',
     anchor='center',
-    background='#49ceff'
+    background=primaryColor
 )
 canvas1.create_window(half_width, (half_heigth + 10), window=button1)
 
@@ -140,16 +167,20 @@ button1 = tk.Button(
 )
 canvas1.create_window(half_width, (half_heigth + 40), window=button1)
 
+right = tk.Toplevel
+
 # button: Destroy
 button1 = tk.Button(
     window,
-    width=20,
+    width=3,
     command=close,
-    text='Close',
+    text='X',
     anchor='center',
-    background='#e33c2f'
+    background='#e33c2f',
+    font='#fff',
+    border=0
 )
-canvas1.create_window(half_width, (half_heigth + 70), window=button1)
+canvas1.create_window(275, 20, window=button1)
 
 # Start tk window
 window.mainloop()
