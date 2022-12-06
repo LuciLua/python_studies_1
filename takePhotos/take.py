@@ -1,14 +1,16 @@
+from PIL import ImageTk, Image
 import os
 import tkinter as tk
 import pyautogui
 import ctypes
 
+from tkinter import Canvas, Frame, Tk
 from playsound import playsound
 from time import sleep
 from datetime import datetime
 
 # minimize window
-ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+# ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 # Create Tk from tk
 window = tk.Tk()
@@ -22,6 +24,7 @@ current_dir = os.getcwd()
 screenshots_path = current_dir + '\\screenshots'
 
 backgroundImage = current_dir+'\\assets\\background.png'
+closeImage = current_dir+'\\assets\\close.png'
 
 # colors
 background = '#1e1e1e'
@@ -102,9 +105,8 @@ def saveScreenShot():
 
     print("[...] Screenshot was saved")
 
+
 # main function
-
-
 def run():
     createDirectory()
     saveScreenShot()
@@ -112,7 +114,7 @@ def run():
 
 def close():
     window.destroy()
-    playSound('close')
+    # playSound('close')
 
 
 def directory():
@@ -135,15 +137,19 @@ label1 = tk.Label(
 label1.config(font=('Poppins', 16))
 canvas1.create_window(half_width, (half_heigth - 50), window=label1)
 
-# Background Image
-# bgImage = tk.Image(
-#     window,
-#     width=300,
-#     anchor='center',
-#     background=backgroundImage
-# )
-# canvas1.create_window(half_width, half_heigth, window=bgImage)
-
+# Background Image:closebtn
+photoimage = ImageTk.PhotoImage(file=closeImage)
+closeBtn = tk.Button(window,
+                    text='teste',
+                    bg=background,
+                    anchor='center',
+                    width=15,
+                    height=15,
+                    command=close,
+                    border=0,
+                    image=photoimage
+                    )
+canvas1.create_window(288, 12, window=closeBtn, anchor='center')
 
 # button: Take a Photo
 button1 = tk.Button(
@@ -167,20 +173,22 @@ button1 = tk.Button(
 )
 canvas1.create_window(half_width, (half_heigth + 40), window=button1)
 
-right = tk.Toplevel
-
 # button: Destroy
-button1 = tk.Button(
-    window,
-    width=3,
-    command=close,
-    text='X',
-    anchor='center',
-    background='#e33c2f',
-    font='#fff',
-    border=0
-)
-canvas1.create_window(275, 20, window=button1)
+# button1 = tk.Button(
+#     window,
+#     width=3,
+#     command=close,
+#     text='X',
+#     anchor='center',
+#     background='#e33c2f',
+#     font='#fff',
+#     border=0
+# )
+# canvas1.create_window(275, 20, window=button1)
+
+# ???
+canvas1.pack()
 
 # Start tk window
 window.mainloop()
+#
