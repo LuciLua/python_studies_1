@@ -1,10 +1,8 @@
-from PIL import ImageTk, Image
+from PIL import ImageTk
 import os
 import tkinter as tk
 import pyautogui
-import ctypes
 
-from tkinter import Canvas, Frame, Tk
 from playsound import playsound
 from time import sleep
 from datetime import datetime
@@ -23,8 +21,8 @@ window.anchor('center')
 current_dir = os.getcwd()
 screenshots_path = current_dir + '\\screenshots'
 
-backgroundImage = current_dir+'\\assets\\background.png'
-closeImage = current_dir+'\\assets\\close.png'
+backgroundImage = current_dir + '\\assets\\background.png'
+closeImage = current_dir + '\\assets\\close.png'
 
 # colors
 background = '#1e1e1e'
@@ -54,14 +52,13 @@ window.title("prints_machine v0.1.0 Alpha")
 canvas1.pack()
 
 # remove the border
-window.overrideredirect(1)
+# but this stops de/iconify  
+# window.overrideredirect(1)
 
 # window center
 window.eval('tk::PlaceWindow . center')
 
 # listen a sound effect
-
-
 def playSound(type):
     assets_path = current_dir + '\\assets'
     if type == 'take':
@@ -72,9 +69,8 @@ def playSound(type):
         file_path = assets_path + '\\destroy.wav'
     playsound(file_path)
 
+
 # if not exist: create. If already, just print a messasge
-
-
 def createDirectory():
     if os.path.isdir(screenshots_path):
         print("[...] directory already exists")
@@ -82,7 +78,7 @@ def createDirectory():
         os.makedirs(screenshots_path)
         print("[...] directory created at " + screenshots_path)
 
-
+# take a screenshot
 def takeScreenShot():
     window.iconify()
     sleep(.2)
@@ -140,15 +136,16 @@ canvas1.create_window(half_width, (half_heigth - 50), window=label1)
 # Background Image:closebtn
 photoimage = ImageTk.PhotoImage(file=closeImage)
 closeBtn = tk.Button(window,
-                    text='teste',
-                    bg=background,
-                    anchor='center',
-                    width=15,
-                    height=15,
-                    command=close,
-                    border=0,
-                    image=photoimage
-                    )
+                     text='teste',
+                     bg=background,
+                     anchor='center',
+                     width=15,
+                     height=15,
+                     command=close,
+                     border=0,
+                     justify='center',
+                     image=photoimage
+                     )
 canvas1.create_window(288, 12, window=closeBtn, anchor='center')
 
 # button: Take a Photo
