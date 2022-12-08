@@ -1,4 +1,3 @@
-from PIL import ImageTk
 import os
 import tkinter as tk
 import pyautogui
@@ -7,8 +6,10 @@ from playsound import playsound
 from time import sleep
 from datetime import datetime
 
+import ctypes
+
 # minimize window
-# ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 # Create Tk from tk
 window = tk.Tk()
@@ -107,17 +108,10 @@ def run():
     createDirectory()
     saveScreenShot()
 
-
-def close():
-    window.destroy()
-    # playSound('close')
-
-
 def directory():
     playSound('directory')
     os.path.realpath(screenshots_path)
     os.startfile(screenshots_path)
-
 
 half_width = window_width/2
 half_heigth = window_height/2
@@ -132,21 +126,6 @@ label1 = tk.Label(
 )
 label1.config(font=('Poppins', 16))
 canvas1.create_window(half_width, (half_heigth - 50), window=label1)
-
-# Background Image:closebtn
-photoimage = ImageTk.PhotoImage(file=closeImage)
-closeBtn = tk.Button(window,
-                     text='teste',
-                     bg=background,
-                     anchor='center',
-                     width=15,
-                     height=15,
-                     command=close,
-                     border=0,
-                     justify='center',
-                     image=photoimage
-                     )
-canvas1.create_window(288, 12, window=closeBtn, anchor='center')
 
 # button: Take a Photo
 button1 = tk.Button(
@@ -170,22 +149,8 @@ button1 = tk.Button(
 )
 canvas1.create_window(half_width, (half_heigth + 40), window=button1)
 
-# button: Destroy
-# button1 = tk.Button(
-#     window,
-#     width=3,
-#     command=close,
-#     text='X',
-#     anchor='center',
-#     background='#e33c2f',
-#     font='#fff',
-#     border=0
-# )
-# canvas1.create_window(275, 20, window=button1)
-
 # ???
 canvas1.pack()
 
 # Start tk window
 window.mainloop()
-#
