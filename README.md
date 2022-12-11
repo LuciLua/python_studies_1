@@ -2,11 +2,15 @@
 
 Some studies in python
 
-1. [take photos](#1-📸-take-photosscreenshots)
-2. [flood machine](#2-💬-flood-machine)
-3. [CLI: Requests](#3-💻-cli-requests)
-4. ...
-
+---
+## Index
+- Projects
+  - [Take photos](#1-📸-take-photosscreenshots)
+  - [Flood machine](#2-💬-flood-machine)
+  - [CLI: Requests](#3-💻-cli-requests)
+  - [GUI: Requests](#4-💻-cli-requests)
+  - [Keylogger](#4-💻-keylogger)
+---
 # 1. 📸 take photos/screenshots
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/takePhotos)
@@ -25,7 +29,7 @@ python take.pyw
 
 <img src="printsmachine.png"/>
 
-<hr/> 
+--- 
 
 # 2. 💬 Flood machine
 
@@ -49,7 +53,7 @@ python flood.py
 
 <img src="floodmachine.png"/>
 
-<hr/>
+---
 
 # 3. 💻 CLI: Requests
 
@@ -72,4 +76,46 @@ python .\requestCli.py -m get -p http://luci-lua.tk -H
 ```
 #### [Output] Preview
 <img src="request.png"/>
+
+---
+
+# 4. 💻 GUI: Requests
+
+### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/requestsGUI)
+
+### How to use
+
+```bash
+cd .\requestsGUI\
+```
+
+```bash
+python .\app.py
+```
+
+#### Preview
+<img src="gui_requests.png"/>
+
+---
+
+# 4. 💻 Keylogger
+
+### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/keylogger)
+
+### How to use
+
+```bash
+cd .\keylogger\
+```
+
+```bash
+python .\keylog.py
+```
+
+> ESQ to exit
+
+> *Log in log .txt*
+
+#### Preview
+<img src="keyloggerpreview.png"/>
 
