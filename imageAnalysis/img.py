@@ -2,28 +2,27 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-iA = cv2.imread('imagem.png')
-iB = cv2.imread('img.jpg')
+# Implementation of matplotlib function
+import datetime
 
-# IMREAD_COLOR - 1
-# IMREAD_UNCHAGED = -1
+# image
+imageA = cv2.imread('imagem.png')
+plt.imshow(imageA)
 
-iResult = iA
 
-# a = cv2.imshow("Altered", iResult)
+# lines
+# [x][y]
+plt.plot([100, 400], [200, 200], 'r', linewidth=1)
+plt.plot([150, 350], [100, 100], 'b', linewidth=1)
+plt.legend("12")
 
-# cv2.imshow('image', iA)
 
-plt.imshow(iA, cmap = 'gray', interpolation='bicubic')
-
-plt.plot([493, 233], [200, 295], 'r', linewidth=2)
-plt.plot([43, 450], [200, 45], 'b', linewidth=3)
+# dates
+dates = datetime.date.today()
+plt.title(dates)
 
 
 plt.show()
-
-cv2.imwrite('imagem', iA)
-
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
