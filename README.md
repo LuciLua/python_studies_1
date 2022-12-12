@@ -5,13 +5,13 @@ Some studies in python
 ---
 ## Index
 - Projects
-  - [Take photos](#1-📸-take-photosscreenshots)
-  - [Flood machine](#2-💬-flood-machine)
-  - [CLI: Requests](#3-💻-cli-requests)
-  - [GUI: Requests](#4-💻-cli-requests)
-  - [Keylogger](#4-💻-keylogger)
+  - [Take photos](#1📸takephotosscreenshots)
+  - [Flood Machine](#2💬floodMachine)
+  - [CLI: Requests](#3💻cli-requests)
+  - [GUI: Requests](#4💻gui-requests)
+  - [Keylogger](#5🖊️keylogger)
 ---
-# 1. 📸 take photos/screenshots
+# 1.📸takePhotosscreenshots
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/takePhotos)
 
@@ -31,7 +31,7 @@ python take.pyw
 
 --- 
 
-# 2. 💬 Flood machine
+# 2.💬FloodMachine
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/flood)
 
@@ -55,7 +55,7 @@ python flood.py
 
 ---
 
-# 3. 💻 CLI: Requests
+# 3.💻CLI-Requests
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/requestsCli)
 
@@ -79,7 +79,7 @@ python .\requestCli.py -m get -p http://luci-lua.tk -H
 
 ---
 
-# 4. 💻 GUI: Requests
+# 4.💻GUI-Requests
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/requestsGUI)
 
@@ -98,7 +98,7 @@ python .\app.py
 
 ---
 
-# 4. 💻 Keylogger
+# 5.🖊️Keylogger
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/keylogger)
 
