@@ -10,11 +10,12 @@ imageA = cv2.imread('imagem.png')
 plt.imshow(imageA)
 
 
+
 # lines
 # [x][y]
-plt.plot([100, 400], [200, 200], 'r', linewidth=1)
-plt.plot([150, 350], [100, 100], 'b', linewidth=1)
-plt.legend("12")
+# plt.plot([100, 400], [200, 200], 'r', linewidth=1)
+# plt.plot([150, 350], [100, 100], 'b', linewidth=1)
+# plt.legend("12")
 
 
 # dates
