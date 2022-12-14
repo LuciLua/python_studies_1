@@ -2,15 +2,6 @@
 
 Some studies in python
 
----
-## Index
-- Projects
-  - [Take photos](#1📸takephotosscreenshots)
-  - [Flood Machine](#2💬floodMachine)
-  - [CLI: Requests](#3💻cli-requests)
-  - [GUI: Requests](#4💻gui-requests)
-  - [Keylogger](#5🖊️keylogger)
----
 # 1.📸takePhotosscreenshots
 
 ### :octocat: => [Repo](https://github.com/LuciLua/python_studies_1/tree/master/takePhotos)
