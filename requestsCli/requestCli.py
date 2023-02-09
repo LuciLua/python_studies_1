@@ -19,6 +19,7 @@ headers = False
 copy = False
 openBrowser = False
 save = False
+times = 1
 
 parser = argparse.ArgumentParser()
 
@@ -93,6 +94,13 @@ parser.add_argument(
     const=True,
     help='save content')
 
+parser.add_argument(
+    '-t',
+    '--times',
+    nargs='?',
+    const=True,
+    help='how many times do you want to send the request')
+
 args = parser.parse_args()
 # What was past
 
@@ -115,6 +123,9 @@ def printKeyAndValue():
 
 def printMethod():
     return '''%sMethod: %s %s\n''' % (Colors.gray, Colors.green, method)
+
+def printTimes():
+    return '''%sTimes: %s %s\n''' % (Colors.white, Colors.green, times)
 
 def printPath():
     return '''%sPath: %s %s''' % (Colors.gray, Colors.green, path)
@@ -150,19 +161,25 @@ def mainExec():
             print(printKeyAndValue())
     else:
         print(Colors.red + '\n> Method not exists or not was defined\n') 
-    div('QUERIES')
     # -------- Header [end] --------
     
     # -------- Queries [start] -------- 
-    if (method == 'get'):
-        response = requests.get(path)
-        print(printStatus(response))
-        showStatusAndVerifyArgsHeadersCookiesAndContent(response)
-    if (method == 'post'):
-        response = requests.post(path, data=value)
-        print(printStatus(response))
-        showStatusAndVerifyArgsHeadersCookiesAndContent(response)
+    
+    for i in range(1, int(times) + 1):    
+        print('''[...] %s - sending requests''' % int(i))
+    
+        if (method == 'get'):
+            response = requests.get(path)    
+                
+        if (method == 'post'):
+            response = requests.post(path, data=value)
+        
     div('TASKS')
+    print(printStatus(response))
+    print(printTimes())
+    
+    showStatusAndVerifyArgsHeadersCookiesAndContent(response)
+    
     # -------- Queries [end] --------
     
     # -------- Output tasks [start] --------
@@ -186,13 +203,17 @@ if (args.path):
 
     if (args.copy):
         copy = True
+        
 
     if (args.method):
         method = args.method
-
+        
         if (args.method == 'post'):
             key = args.key
             value = {args.key: args.value}
+            
+        if (args.times):
+            times = args.times
 
         if (args.cookies):
             cookies = True

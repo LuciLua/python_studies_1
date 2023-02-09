@@ -21,6 +21,8 @@ python .\requestCli.py [...params]
 
 -v value
 
+-t times
+
 -k key
 
 -H header
@@ -36,3 +38,7 @@ python .\requestCli.py [...params]
 -s save content in a json file
 ```
 *Must have
+
+## Preview
+
+<img src="preview.png" />
