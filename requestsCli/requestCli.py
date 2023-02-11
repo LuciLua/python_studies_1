@@ -125,7 +125,7 @@ def printMethod():
     return '''%sMethod: %s %s\n''' % (Colors.gray, Colors.green, method)
 
 def printTimes():
-    return '''%sTimes: %s %s\n''' % (Colors.white, Colors.green, times)
+    return '''%sTimes: %s %s\n''' % (Colors.gray, Colors.green, times)
 
 def printPath():
     return '''%sPath: %s %s''' % (Colors.gray, Colors.green, path)
@@ -157,6 +157,7 @@ def mainExec():
     div('HEADER')
     if (method and method == 'post' or method == 'get'):
         print(printMethod() + printPath())
+        print(printTimes())
         if (method == 'post'):
             print(printKeyAndValue())
     else:
@@ -172,11 +173,11 @@ def mainExec():
             response = requests.get(path)    
                 
         if (method == 'post'):
-            response = requests.post(path, data=value)
+            response = requests.post(path, data=dicionario)
         
     div('TASKS')
     print(printStatus(response))
-    print(printTimes())
+
     
     showStatusAndVerifyArgsHeadersCookiesAndContent(response)
     
@@ -210,7 +211,21 @@ if (args.path):
         
         if (args.method == 'post'):
             key = args.key
-            value = {args.key: args.value}
+            keySplited = key.split(',')
+            
+            value = args.value
+            valueSplited = value.split(',')
+            
+            finalValue = []
+            dicionario = {}
+            
+            for keys in range(len(keySplited)):
+                finalValue += (keySplited[keys],valueSplited[keys])
+                
+            for i in range(0, len(finalValue), 2):
+                dicionario[finalValue[i]] = finalValue[i+1]
+                    
+            # print(dicionario)
             
         if (args.times):
             times = args.times
