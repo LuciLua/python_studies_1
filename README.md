@@ -1,5 +1,7 @@
 # Python Studies
 
+(Colocar nas pastas por projeto e separar em lista de links aqui)
+
 Some studies in python
 
 # 1.📸takePhotosscreenshots
